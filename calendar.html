@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .button {
+            background-color: #4CAF50; 
+            border: none; 
+            color: white; 
+            padding: 10px 20px; 
+            cursor: pointer; 
+            margin-bottom: 10px; 
+        }
+
+        .button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div style="text-align: center; margin-top: 50px;">
+        <h1 id="Calendar!">Calendar!</h1>
+        <button onclick="whatDayIsToday()" class="button">What day is today?</button>
+        <button onclick="todaysDate()" class="button">Today's Date</button>
+        <button onclick="currentTime()" class="button">Current Time</button>
+        <button id="weatherButton" class="button">Today's Weather</button>
+        
+        <p id="locationStatus">Location status will be displayed here.</p>
+    </div>
+ 
+   
+    <script>
+
+        function speak(message) {
+            var utterance = new SpeechSynthesisUtterance(message);
+            window.speechSynthesis.speak(utterance);
+        }
+
+        
+        function todaysWeather(apiKey) {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition((position) => {
+                    const latitude = position.coords.latitude;
+                    const longitude = position.coords.longitude;
+                    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`;
+
+                    fetch(url)
+                        .then(response => response.json())
+                        .then(data => {
+                            const weatherDescription = data.weather[0].description;
+                            const temperature = data.main.temp;
+                            const weather = `${weatherDescription}, ${temperature} degrees Celsius`;
+                            speak(`Today's weather is ${weather}`);
+                            document.getElementById('locationStatus').textContent = `Today's weather is ${weather}`;
+                        })
+                        .catch(error => {
+                            console.error('Error fetching weather data:', error);
+                        });
+                }, (error) => {
+                    console.error('Geolocation error:', error);
+                });
+            } else {
+                console.error('Geolocation is not supported by this browser.');
+            }
+        }
+
+        
+        document.getElementById('weatherButton').addEventListener('click', function() {
+            const apiKey = '0e3be928c54b72bd4e2fb409c9a13ef9'; 
+            todaysWeather(apiKey);
+        });
+
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

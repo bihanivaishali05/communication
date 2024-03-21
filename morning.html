@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Good Morning</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .button {
+            background-color: #4CAF50; 
+            border: none; 
+            color: white;
+            padding: 10px 20px; 
+            cursor: pointer; 
+            margin-bottom: 10px; 
+        }
+
+        .button:hover {
+            background-color: #45a049; 
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="container">
+        <h1>Good Morning!</h1>
+        <button onclick="speakMorning()" class="button">Speak Morning</button>
+        <button onclick="speakGreeting()" class="button">Speak Greeting</button>
+    </div>
+
+    <script>
+        function speakMorning() {
+            speak('Good morning. Get up, brush, exercise, and take a shower.');
+        }
+        function speakGreeting() {
+            speak('Namaste, Have a good Day');
+        }
+    </script>
+    <script src="script.js"></script>
+
+</body>
+</html>
